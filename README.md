@@ -7,13 +7,14 @@ Docker swarm mode environment is required:
 - *OR* see [Docker for AWS](https://docs.docker.com/docker-for-aws/) documentation on how to create a Docker swarm cluster on AWS
 - *OR* see [Play with Docker](https://labs.play-with-docker.com/) which is a simple, interactive and fun playground to learn Docker
 
-### Creating infrastructure locally
+### If infra created locally using provided Vagrantfile
 Create VMs locally and change directory to docker compose file is:
 - `vagrant up` - This will create 1x node docker swarm mode cluster
 - `vagrant ssh` - SSH in to the VM with is a master node
 - `cd /vagrant`
 
-### Running docker stack in the cloud
+### if infra created in the cloud
+SSH in to the swarm master node and execute the following commands to clone this repo
 ```
 alias git='docker run -it --rm --name git -v $PWD:/git -w /git alpine/git'
 git version
@@ -23,6 +24,7 @@ cd keycloak
 ```
 
 ### Deploying Keycloak
+Once repo has been cloned, execute the following commands to start keycloak service
 ```
 docker stack deploy --compose-file docker-compose.yml keycloak
 docker stack services keycloak
