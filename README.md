@@ -27,8 +27,8 @@ cd keycloak
 
 ### Deploying Keycloak
 Once repo has been cloned, execute the following commands to start keycloak service
-`docker stack deploy --compose-file docker-compose.yml keycloak`. This uses an embadded database
-`docker stack services keycloak`
+- `docker stack deploy --compose-file docker-compose.yml keycloak`. This uses an embadded database
+- `docker stack services keycloak`
 
 ### Testing
 In your favorite browser, navigate to:
