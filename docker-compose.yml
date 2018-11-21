@@ -33,6 +33,7 @@ services:
     environment:
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=password
+      # see this blog: https://medium.com/@basi/docker-environment-variables-expanded-from-secrets-8fa70617b3bc
     secrets:
       - keycloak-pass
     deploy:
