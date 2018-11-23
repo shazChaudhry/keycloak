@@ -1,4 +1,4 @@
-version: "3.6"
+version: "3.7"
 
 services:
 
@@ -47,6 +47,6 @@ services:
 networks:
     proxy:
 
-secrets:
-    keycloak-pass:
-      file: $PWD/secrets/keycloak/pass.txt
+# secrets:
+#     keycloak-pass:
+#       file: $PWD/secrets/keycloak/pass.txt

@@ -17,7 +17,7 @@ Vagrant.configure("2") do |config|
 		keycloak.vm.network :private_network, ip: "192.168.99.101"
 		keycloak.vm.provider :virtualbox do |v|
 			v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-			v.customize ["modifyvm", :id, "--memory", 4000]
+			v.customize ["modifyvm", :id, "--memory", 8000]
 			v.customize ["modifyvm", :id, "--name", "keycloak"]
 		end
 		keycloak.vm.provision :shell, inline: $docker_swarm_init

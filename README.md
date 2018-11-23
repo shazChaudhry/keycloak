@@ -4,10 +4,9 @@
 
 ### Prerequisite
 Docker swarm mode environment is required:
-- Use provided `Vagrantfile` if you are unable to run Docker CE natively on a local machine. You might then have to adjust memory allocation
-  - It is assumed that you have already installed Oracle VM VirtualBox
-- *OR* see [Docker for AWS](https://docs.docker.com/docker-for-aws/) documentation on how to create a Docker swarm cluster on AWS
-- *OR* see [Play with Docker](https://labs.play-with-docker.com/) which is a simple, interactive and fun playground to learn Docker
+1. You may use the provided `Vagrantfile` which creates a single-node swarm cluster. You might have to adjust memory allocation in the Vagrantfile. It is assumed that you have already installed [Vagrant](https://www.vagrantup.com), [Oracle VM VirtualBox](https://www.virtualbox.org) and [GitBash](https://gitforwindows.org) _(this Varantfile was tested on Windows 10 pro macine)_
+2. *OR* see [Docker for AWS](https://docs.docker.com/docker-for-aws) documentation on how to create a Docker swarm cluster on AWS
+3. *OR* see [Play with Docker](https://labs.play-with-docker.com) which is a simple, interactive and fun playground to learn Docker
 
 ### If infra created locally using provided Vagrantfile
 Create VMs locally and change directory to docker compose file is:
