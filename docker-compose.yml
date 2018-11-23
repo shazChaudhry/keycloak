@@ -30,12 +30,16 @@ services:
     image: jboss/keycloak
     networks:
       - proxy
+      - keycloak
     environment:
+      - DB_VENDOR=postgres
+      - DB_ADDR=keycloakDB
+      - DB_DATABASE=keycloak
+      - DB_USER=keycloak
+      - DB_PASSWORD=password
       - KEYCLOAK_USER=admin
-      - KEYCLOAK_PASSWORD=password
-      # see this blog: https://medium.com/@basi/docker-environment-variables-expanded-from-secrets-8fa70617b3bc
-    secrets:
-      - keycloak-pass
+      - KEYCLOAK_PASSWORD=Password01
+      - PROXY_ADDRESS_FORWARDING=true
     deploy:
       labels:
         - com.df.notify=true
@@ -44,9 +48,20 @@ services:
         - com.df.port=8080
         - com.df.srcPort=80
 
+  keycloakDB:
+    image: postgres
+    networks:
+      - keycloak
+    volumes:
+      - keycloak_database:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=keycloak
+      - POSTGRES_USER=keycloak
+      - POSTGRES_PASSWORD=password
+
 networks:
     proxy:
+    keycloak:
 
-# secrets:
-#     keycloak-pass:
-#       file: $PWD/secrets/keycloak/pass.txt
+volumes:
+    keycloak_database:
