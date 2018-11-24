@@ -1,14 +1,14 @@
 # Work in progress
 
-### User story
+# User story
 As a member of DevOps team, I would like to stand up Keycloak instance along with postgres database
 
-### Prerequisite
+# Prerequisite
 Docker swarm mode environment is required:
 1. You may use the provided `Vagrantfile` which creates a single-node swarm cluster. You might have to adjust memory allocation in the Vagrantfile. It is assumed that you have already installed [Vagrant](https://www.vagrantup.com), [Oracle VM VirtualBox](https://www.virtualbox.org) and [GitBash](https://gitforwindows.org) _(this Varantfile was tested on Windows 10 pro machine)_
 2. *OR* see [Docker for AWS](https://docs.docker.com/docker-for-aws) documentation on how to create a Docker swarm cluster on AWS
 
-### If infra created locally using provided Vagrantfile
+# If infra created locally using provided Vagrantfile
 Create VMs locally and change directory to docker compose file is:
 - `vagrant up` - This will create 1x node docker swarm mode cluster
 - `vagrant ssh` - SSH in to the VM with is a master node
@@ -16,13 +16,13 @@ Create VMs locally and change directory to docker compose file is:
 - `docker stack deploy --compose-file docker-compose.yml keycloak` This will deploy the entire stack
 - `docker service ls` - Check status of services
 
-### Clean-up
+## Clean-up
 On the swarm master node, run the following commands:
 * `docker stack rm keycloak` to remove the stack
 * `exit` to exit the Virtual Box
 * `vagrant destroy --force` to destroy the VMs
 
-### if infra created in the cloud _(Option #2 above)_
+# If infra created in the cloud _(Option #2 above)_
 It is assumed you have followed [Docker for AWS](https://docs.docker.com/docker-for-aws/) documentation to create a new VPC. Follow these commands in an ssh client to log in to your master node _(I'm using gitbash on Windows 10 Pro)_.
 
 **Please** note you can not ssh directly into worker nodes. You have to use a manager node as a jump box
@@ -57,10 +57,10 @@ Run the combined stack. Please note that self-signed certificates are in ./certs
   - `docker stack deploy --compose-file docker-stack.yml keycloak` You may be interested in knowing that this stack defines a volume plugin called [Cloudstor](https://docs.docker.com/docker-for-aws/persistent-data-volumes/). Docker containers can use a volume created with Cloudstor _(available across entire cluster)_ to mount a persistent data volume
   - `docker service ls`
 
-### Configuring Keycloak
-- Follow the documentation at https://www.keycloak.org/documentation.html
+# Testing
+  In your favorite browser, navigate to:
+  - https://HOST_NAME _(e.g. https://keycloak for locally provisioned infra)_
+  - username / password = admin / Password01
 
-### Testing
-In your favorite browser, navigate to:
-- https://HOST_NAME _(e.g. https://keycloak for locally provisioned infra)_
-- username / password = admin / Password01
+# Configuring Keycloak
+- Follow the documentation at https://www.keycloak.org/documentation.html
