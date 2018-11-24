@@ -64,3 +64,6 @@ Run the combined stack. Please note that self-signed certificates are in ./certs
 
 # Configuring Keycloak
 - Follow the documentation at https://www.keycloak.org/documentation.html
+
+# References
+- Jenkins-keycloak-plugin youtube: https://wiki.jenkins.io/display/JENKINS/keycloak-plugin
