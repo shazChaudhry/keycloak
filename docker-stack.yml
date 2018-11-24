@@ -1,0 +1,77 @@
+networks:
+  keycloak: {}
+  proxy: {}
+secrets:
+  cert-xip.io.pem:
+    file: $PWD/certs/ci.pem
+services:
+  keycloak:
+    deploy:
+      labels:
+        com.df.distribute: "true"
+        com.df.notify: "true"
+        com.df.port: '8080'
+        com.df.servicePath: /
+        com.df.srcPort: '443'
+    environment:
+      DB_ADDR: keycloakDB
+      DB_DATABASE: keycloak
+      DB_PASSWORD: password
+      DB_USER: keycloak
+      DB_VENDOR: postgres
+      KEYCLOAK_PASSWORD: Password01
+      KEYCLOAK_USER: admin
+      PROXY_ADDRESS_FORWARDING: "true"
+    image: jboss/keycloak
+    networks:
+      keycloak: null
+      proxy: null
+  keycloakDB:
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: keycloak
+    image: postgres
+    networks:
+      keycloak: null
+    volumes:
+    - keycloak_database:/var/lib/postgresql/data:rw
+  proxy:
+    environment:
+      LISTENER_ADDRESS: swarm-listener
+      MODE: swarm
+    hostname: proxy
+    image: dockerflow/docker-flow-proxy:latest
+    networks:
+      proxy: null
+    ports:
+    - published: 80
+      target: 80
+    - published: 443
+      target: 443
+    secrets:
+    - source: cert-xip.io.pem
+  swarm-listener:
+    deploy:
+      placement:
+        constraints:
+        - node.role == manager
+    environment:
+      DF_NOTIFY_CREATE_SERVICE_URL: http://proxy:8080/v1/docker-flow-proxy/reconfigure
+      DF_NOTIFY_REMOVE_SERVICE_URL: http://proxy:8080/v1/docker-flow-proxy/remove
+    hostname: swarm-listener
+    image: dockerflow/docker-flow-swarm-listener:latest
+    networks:
+      proxy: null
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock:rw
+version: '3.7'
+volumes:
+  keycloak_database:
+    driver: cloudstor:aws
+    driver_opts:
+      backing: relocatable
+      ebstype: gp2
+      iops: '1000'
+      size: '25'
+

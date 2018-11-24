@@ -4,6 +4,7 @@ services:
 
   swarm-listener:
     image: dockerflow/docker-flow-swarm-listener:latest
+    hostname: swarm-listener
     networks:
       - proxy
     volumes:
@@ -17,6 +18,7 @@ services:
 
   proxy:
     image: dockerflow/docker-flow-proxy:latest
+    hostname: proxy
     ports:
       - "80:80"
       - "443:443"
@@ -25,6 +27,8 @@ services:
     environment:
       - LISTENER_ADDRESS=swarm-listener
       - MODE=swarm
+    secrets:
+        - cert-xip.io.pem
 
   keycloak:
     image: jboss/keycloak
@@ -46,7 +50,7 @@ services:
         - com.df.distribute=true
         - com.df.servicePath=/
         - com.df.port=8080
-        - com.df.srcPort=80
+        - com.df.srcPort=443
 
   keycloakDB:
     image: postgres
@@ -65,3 +69,8 @@ networks:
 
 volumes:
     keycloak_database:
+
+secrets:
+    cert-xip.io.pem:
+      # This certificate is local testing
+      file: $PWD/certs/xip.io.pem
