@@ -1,6 +1,7 @@
-# WIP
+# Work in progress
 
 ### User story
+As a member of DevOps team, I would like to stand up Keycloak instance along with postgres database
 
 ### Prerequisite
 Docker swarm mode environment is required:
@@ -28,6 +29,9 @@ cd keycloak
 Once repo has been cloned, execute the following commands to start keycloak service
 - `docker stack deploy --compose-file docker-compose.yml keycloak`. This uses an embadded database
 - `docker stack services keycloak`
+
+### Configuring Keycloak
+- Follow the documentation at https://www.keycloak.org/documentation.html
 
 ### Testing
 In your favorite browser, navigate to:
